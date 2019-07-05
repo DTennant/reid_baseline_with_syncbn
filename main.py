@@ -8,6 +8,7 @@ import os.path as osp
 import torch
 torch.backends.cudnn.benchmark = True
 torch.backends.cudnn.deterministic = True
+torch.multiprocessing.set_sharing_strategy('file_system')
 import torch.nn as nn
 import torchvision as tv
 
@@ -87,8 +88,10 @@ def train(args):
                           optim, scheduler, loss_func, num_query)
 
     for epoch in range(trainer.epochs):
-        for it in range(len(trainer.train_dl)):
-            trainer.step()
+        for batch in trainer.train_dl:
+            trainer.step(batch)
+            trainer.handle_new_batch()
+        trainer.handle_new_epoch()
 
 
 

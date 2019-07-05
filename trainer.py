@@ -1,4 +1,5 @@
 import torch
+from tqdm import tqdm
 import numpy as np
 import logging 
 from evaluate import eval_func, re_rank
@@ -50,7 +51,8 @@ class BaseTrainer(object):
             self._handle_new_epoch()
         return batch
 
-    def _handle_new_batch(self):
+    def handle_new_batch(self):
+        self.batch_cnt += 1
         if self.batch_cnt % self.cfg.SOLVER.LOG_PERIOD == 0:
             self.logger.info('Epoch[{}] Iteration[{}/{}] Loss: {:.3f},'
                             'Acc: {:.3f}, Base Lr: {:.2e}'
@@ -59,7 +61,7 @@ class BaseTrainer(object):
                                     self.acc_avg.avg, self.scheduler.get_lr()[0]))
 
 
-    def _handle_new_epoch(self):
+    def handle_new_epoch(self):
         self.batch_cnt = 1
         self.scheduler.step()
         self.logger.info('Epoch {} done'.format(self.train_epoch))
@@ -70,10 +72,10 @@ class BaseTrainer(object):
         if self.train_epoch % self.eval_period == 0:
             self.evaluate()
 
-    def step(self):
+    def step(self, batch):
         self.model.train()
         self.optim.zero_grad()
-        img, target = self._get_train_data()
+        img, target = batch
         img, target = img.cuda(), target.cuda()
         score, feat = self.model(img)
         loss = self.loss_func(score, feat, target)
@@ -87,7 +89,7 @@ class BaseTrainer(object):
         
         return self.loss_avg.avg, self.acc_avg.avg
 
-    def _euclidean_dist(x, y):
+    def _euclidean_dist(self, x, y):
         """
         Args:
           x: pytorch Variable, with shape [m, d]
@@ -105,9 +107,11 @@ class BaseTrainer(object):
 
     def evaluate(self):
         self.model.eval()
+        num_query = self.num_query
         feats, pids, camids = [], [], []
         with torch.no_grad():
-            for batch in self.val_dl:
+            for batch in tqdm(self.val_dl, total=len(self.val_dl),
+                             leave=False):
                 data, pid, camid = batch
                 data = data.cuda()
                 feat = self.model(data).detach().cpu()
@@ -128,20 +132,21 @@ class BaseTrainer(object):
         
         distmat = self._euclidean_dist(query_feat, gallery_feat)
 
-        cmc, mAP = eval_func(distmat, query_pid, gallery_pid, 
-                             query_camid, gallery_camid)
+        cmc, mAP = eval_func(distmat.numpy(), query_pid.numpy(), gallery_pid.numpy(), 
+                             query_camid.numpy(), gallery_camid.numpy(),
+                             use_cython=True)
         self.logger.info('Validation Result:')
-        self.logger.info('CMC Rank-1: {}'.format(cmc[1 - 1]))
-        self.logger.info('CMC Rank-5: {}'.format(cmc[5 - 1]))
-        self.logger.info('CMC Rank-10: {}'.format(cmc[10 - 1]))
-        self.logger.info('mAP: {}'.format(mAP))
+        self.logger.info('CMC Rank-1: {:.2%}'.format(cmc[1 - 1]))
+        self.logger.info('CMC Rank-5: {:.2%}'.format(cmc[5 - 1]))
+        self.logger.info('CMC Rank-10: {:.2%}'.format(cmc[10 - 1]))
+        self.logger.info('mAP: {:.2%}'.format(mAP))
         self.logger.info('-' * 20)
 
     def save(self):
         torch.save(self.model.state_dict(), osp.join(self.output_dir,
-                self.cfg.MODEL.NAME + str(self.train_epoch) + '.pth'))
+                self.cfg.MODEL.NAME + '_epoch' + str(self.train_epoch-1) + '.pth'))
         torch.save(self.optim.state_dict(), osp.join(self.output_dir,
-                self.cfg.MODEL.NAME + str(self.train_epoch) + '_optim.pth'))
+                self.cfg.MODEL.NAME + '_epoch'+ str(self.train_epoch-1) + '_optim.pth'))
 
 
 

@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 import numpy as np
-from .eval_cylib import eval_metrics_cy
+from .eval_cylib.eval_metrics_cy import evaluate_cy
 
 
 def eval_func(distmat, q_pids, g_pids, q_camids, g_camids, max_rank=50, use_cython=False):
