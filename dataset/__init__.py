@@ -32,7 +32,7 @@ def make_dataloader(cfg, num_gpus=1):
     train_trm = get_trm(cfg, is_train=True)
     val_trm = get_trm(cfg, is_train=False)
 
-    num_workers = cfg.DATALOADER.NUM_WORKERS
+    num_workers = cfg.DATALOADER.NUM_WORKERS * num_gpus
     dataset = init_dataset(cfg)
 
     num_classes = dataset.num_train_pids

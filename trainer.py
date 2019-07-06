@@ -3,6 +3,7 @@ from tqdm import tqdm
 import numpy as np
 import logging 
 from evaluate import eval_func, re_rank
+from evaluate import euclidean_dist
 from utils import AvgerageMeter
 import os.path as osp
 import os
@@ -89,22 +90,6 @@ class BaseTrainer(object):
         
         return self.loss_avg.avg, self.acc_avg.avg
 
-    def _euclidean_dist(self, x, y):
-        """
-        Args:
-          x: pytorch Variable, with shape [m, d]
-          y: pytorch Variable, with shape [n, d]
-        Returns:
-          dist: pytorch Variable, with shape [m, n]
-        """
-        m, n = x.size(0), y.size(0)
-        xx = torch.pow(x, 2).sum(1, keepdim=True).expand(m, n)
-        yy = torch.pow(y, 2).sum(1, keepdim=True).expand(n, m).t()
-        dist = xx + yy
-        dist.addmm_(1, -2, x, y.t())
-        dist = dist.clamp(min=1e-12).sqrt()  # for numerical stability
-        return dist
-
     def evaluate(self):
         self.model.eval()
         num_query = self.num_query
@@ -130,7 +115,7 @@ class BaseTrainer(object):
         gallery_pid = pids[num_query:]
         gallery_camid = camids[num_query:]
         
-        distmat = self._euclidean_dist(query_feat, gallery_feat)
+        distmat = euclidean_dist(query_feat, gallery_feat)
 
         cmc, mAP = eval_func(distmat.numpy(), query_pid.numpy(), gallery_pid.numpy(), 
                              query_camid.numpy(), gallery_camid.numpy(),

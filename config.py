@@ -109,6 +109,7 @@ _C.TEST = CN()
 _C.TEST.IMS_PER_BATCH = 128
 _C.TEST.WEIGHT = ""
 _C.TEST.DEBUG = False
+_C.TEST.MULTI_GPU = False
 
 # ---------------------------------------------------------------------------- #
 # Misc options

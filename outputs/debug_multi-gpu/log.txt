@@ -1,0 +1,324 @@
+2019-07-06 13:13:00,473 reid_baseline INFO: Using 2 GPUS
+2019-07-06 13:13:00,474 reid_baseline INFO: Namespace(config_file='configs/debug_multi-gpu.yml', opts=[], test=False)
+2019-07-06 13:13:00,475 reid_baseline INFO: Running with config:
+DATALOADER:
+  NUM_INSTANCE: 8
+  NUM_WORKERS: 4
+  SAMPLER: softmax_triplet
+DATASETS:
+  DATA_PATH: /home/zbc/data/market1501
+  GALLERY_PATH: bounding_box_test
+  NAMES: market1501
+  QUERY_PATH: query
+  TRAIN_PATH: bounding_box_train
+INPUT:
+  PADDING: 0
+  PIXEL_MEAN: [0.5, 0.5, 0.5]
+  PIXEL_STD: [0.5, 0.5, 0.5]
+  PROB: 0.5
+  RE_PROB: 0.5
+  SIZE_TEST: [224, 224]
+  SIZE_TRAIN: [224, 224]
+MODEL:
+  DEVICE: cuda
+  LABEL_SMOOTH: False
+  LAST_STRIDE: 1
+  NAME: resnet50
+  PRETRAIN_PATH: /home/zbc/.torch/models/resnet50-19c8e357.pth
+OUTPUT_DIR: /home/zbc/ReID/outputs/debug_multi-gpu
+SOLVER:
+  BASE_LR: 0.0001
+  BIAS_LR_FACTOR: 1
+  CHECKPOINT_PERIOD: 1
+  CYTHON: False
+  EVAL_PERIOD: 1
+  FP16: False
+  GAMMA: 0.6
+  IMS_PER_BATCH: 64
+  LOG_PERIOD: 100
+  MARGIN: 0.3
+  MAX_EPOCHS: 30
+  MOMENTUM: 0.9
+  OPTIMIZER_NAME: Adam
+  STEPS: (20, 30, 45, 60, 75, 90, 105, 120, 135, 150, 165, 180, 195, 210, 225, 240, 255)
+  WARMUP_FACTOR: 0.01
+  WARMUP_ITERS: 10
+  WARMUP_METHOD: linear
+  WEIGHT_DECAY: 0.0005
+  WEIGHT_DECAY_BIAS: 0.0005
+TEST:
+  DEBUG: True
+  IMS_PER_BATCH: 16
+  WEIGHT: path
+2019-07-06 13:13:01,731 reid_baseline INFO: More than one gpu used, convert model to use SyncBN.
+2019-07-06 13:13:05,192 reid_baseline.train INFO: Trainer Built
+2019-07-06 13:14:44,877 reid_baseline.train INFO: Epoch[1] Iteration[100/105] Loss: 9.054,Acc: 0.005, Base Lr: 2.18e-05
+2019-07-06 13:14:49,316 reid_baseline.train INFO: Epoch 1 done
+2019-07-06 13:14:49,316 reid_baseline.train INFO: --------------------
+2019-07-06 13:15:38,435 reid_baseline.train INFO: Validation Result:
+2019-07-06 13:15:38,436 reid_baseline.train INFO: CMC Rank-1: 9.71%
+2019-07-06 13:15:38,436 reid_baseline.train INFO: CMC Rank-5: 23.49%
+2019-07-06 13:15:38,436 reid_baseline.train INFO: CMC Rank-10: 33.08%
+2019-07-06 13:15:38,436 reid_baseline.train INFO: mAP: 3.74%
+2019-07-06 13:15:38,436 reid_baseline.train INFO: --------------------
+2019-07-06 13:17:07,689 reid_baseline.train INFO: Epoch[2] Iteration[100/105] Loss: 8.465,Acc: 0.027, Base Lr: 4.16e-05
+2019-07-06 13:17:13,206 reid_baseline.train INFO: Epoch 2 done
+2019-07-06 13:17:13,208 reid_baseline.train INFO: --------------------
+2019-07-06 13:17:56,312 reid_baseline.train INFO: Validation Result:
+2019-07-06 13:17:56,312 reid_baseline.train INFO: CMC Rank-1: 19.21%
+2019-07-06 13:17:56,312 reid_baseline.train INFO: CMC Rank-5: 38.03%
+2019-07-06 13:17:56,312 reid_baseline.train INFO: CMC Rank-10: 49.14%
+2019-07-06 13:17:56,312 reid_baseline.train INFO: mAP: 8.24%
+2019-07-06 13:17:56,312 reid_baseline.train INFO: --------------------
+2019-07-06 13:19:25,684 reid_baseline.train INFO: Epoch[3] Iteration[100/105] Loss: 7.951,Acc: 0.041, Base Lr: 6.14e-05
+2019-07-06 13:19:31,111 reid_baseline.train INFO: Epoch 3 done
+2019-07-06 13:19:31,112 reid_baseline.train INFO: --------------------
+2019-07-06 13:20:16,279 reid_baseline.train INFO: Validation Result:
+2019-07-06 13:20:16,280 reid_baseline.train INFO: CMC Rank-1: 31.98%
+2019-07-06 13:20:16,280 reid_baseline.train INFO: CMC Rank-5: 54.99%
+2019-07-06 13:20:16,280 reid_baseline.train INFO: CMC Rank-10: 66.57%
+2019-07-06 13:20:16,280 reid_baseline.train INFO: mAP: 15.99%
+2019-07-06 13:20:16,280 reid_baseline.train INFO: --------------------
+2019-07-06 13:21:45,609 reid_baseline.train INFO: Epoch[4] Iteration[100/105] Loss: 7.518,Acc: 0.052, Base Lr: 8.12e-05
+2019-07-06 13:21:51,113 reid_baseline.train INFO: Epoch 4 done
+2019-07-06 13:21:51,114 reid_baseline.train INFO: --------------------
+2019-07-06 13:22:34,743 reid_baseline.train INFO: Validation Result:
+2019-07-06 13:22:34,743 reid_baseline.train INFO: CMC Rank-1: 48.31%
+2019-07-06 13:22:34,743 reid_baseline.train INFO: CMC Rank-5: 71.73%
+2019-07-06 13:22:34,743 reid_baseline.train INFO: CMC Rank-10: 80.70%
+2019-07-06 13:22:34,743 reid_baseline.train INFO: mAP: 27.72%
+2019-07-06 13:22:34,743 reid_baseline.train INFO: --------------------
+2019-07-06 13:24:03,776 reid_baseline.train INFO: Epoch[5] Iteration[100/105] Loss: 7.126,Acc: 0.062, Base Lr: 1.01e-04
+2019-07-06 13:24:09,177 reid_baseline.train INFO: Epoch 5 done
+2019-07-06 13:24:09,178 reid_baseline.train INFO: --------------------
+2019-07-06 13:24:52,960 reid_baseline.train INFO: Validation Result:
+2019-07-06 13:24:52,960 reid_baseline.train INFO: CMC Rank-1: 60.01%
+2019-07-06 13:24:52,961 reid_baseline.train INFO: CMC Rank-5: 81.59%
+2019-07-06 13:24:52,961 reid_baseline.train INFO: CMC Rank-10: 87.62%
+2019-07-06 13:24:52,961 reid_baseline.train INFO: mAP: 38.66%
+2019-07-06 13:24:52,961 reid_baseline.train INFO: --------------------
+2019-07-06 13:26:22,287 reid_baseline.train INFO: Epoch[6] Iteration[100/105] Loss: 6.748,Acc: 0.077, Base Lr: 1.21e-04
+2019-07-06 13:26:27,788 reid_baseline.train INFO: Epoch 6 done
+2019-07-06 13:26:27,788 reid_baseline.train INFO: --------------------
+2019-07-06 13:27:11,342 reid_baseline.train INFO: Validation Result:
+2019-07-06 13:27:11,342 reid_baseline.train INFO: CMC Rank-1: 67.81%
+2019-07-06 13:27:11,342 reid_baseline.train INFO: CMC Rank-5: 86.13%
+2019-07-06 13:27:11,343 reid_baseline.train INFO: CMC Rank-10: 90.97%
+2019-07-06 13:27:11,343 reid_baseline.train INFO: mAP: 46.54%
+2019-07-06 13:27:11,343 reid_baseline.train INFO: --------------------
+2019-07-06 13:28:40,614 reid_baseline.train INFO: Epoch[7] Iteration[100/105] Loss: 6.386,Acc: 0.098, Base Lr: 1.41e-04
+2019-07-06 13:28:46,055 reid_baseline.train INFO: Epoch 7 done
+2019-07-06 13:28:46,055 reid_baseline.train INFO: --------------------
+2019-07-06 13:29:31,159 reid_baseline.train INFO: Validation Result:
+2019-07-06 13:29:31,160 reid_baseline.train INFO: CMC Rank-1: 74.35%
+2019-07-06 13:29:31,160 reid_baseline.train INFO: CMC Rank-5: 89.61%
+2019-07-06 13:29:31,160 reid_baseline.train INFO: CMC Rank-10: 93.50%
+2019-07-06 13:29:31,160 reid_baseline.train INFO: mAP: 53.52%
+2019-07-06 13:29:31,160 reid_baseline.train INFO: --------------------
+2019-07-06 13:31:00,780 reid_baseline.train INFO: Epoch[8] Iteration[100/105] Loss: 6.021,Acc: 0.131, Base Lr: 1.60e-04
+2019-07-06 13:31:06,270 reid_baseline.train INFO: Epoch 8 done
+2019-07-06 13:31:06,271 reid_baseline.train INFO: --------------------
+2019-07-06 13:31:50,608 reid_baseline.train INFO: Validation Result:
+2019-07-06 13:31:50,609 reid_baseline.train INFO: CMC Rank-1: 77.11%
+2019-07-06 13:31:50,609 reid_baseline.train INFO: CMC Rank-5: 91.03%
+2019-07-06 13:31:50,609 reid_baseline.train INFO: CMC Rank-10: 94.36%
+2019-07-06 13:31:50,609 reid_baseline.train INFO: mAP: 57.73%
+2019-07-06 13:31:50,609 reid_baseline.train INFO: --------------------
+2019-07-06 13:33:19,236 reid_baseline.train INFO: Epoch[9] Iteration[100/105] Loss: 5.672,Acc: 0.171, Base Lr: 1.80e-04
+2019-07-06 13:33:24,695 reid_baseline.train INFO: Epoch 9 done
+2019-07-06 13:33:24,695 reid_baseline.train INFO: --------------------
+2019-07-06 13:34:09,825 reid_baseline.train INFO: Validation Result:
+2019-07-06 13:34:09,825 reid_baseline.train INFO: CMC Rank-1: 79.90%
+2019-07-06 13:34:09,827 reid_baseline.train INFO: CMC Rank-5: 92.04%
+2019-07-06 13:34:09,827 reid_baseline.train INFO: CMC Rank-10: 94.98%
+2019-07-06 13:34:09,827 reid_baseline.train INFO: mAP: 60.67%
+2019-07-06 13:34:09,827 reid_baseline.train INFO: --------------------
+2019-07-06 13:35:38,844 reid_baseline.train INFO: Epoch[10] Iteration[100/105] Loss: 5.330,Acc: 0.214, Base Lr: 2.00e-04
+2019-07-06 13:35:44,284 reid_baseline.train INFO: Epoch 10 done
+2019-07-06 13:35:44,285 reid_baseline.train INFO: --------------------
+2019-07-06 13:36:27,339 reid_baseline.train INFO: Validation Result:
+2019-07-06 13:36:27,339 reid_baseline.train INFO: CMC Rank-1: 82.19%
+2019-07-06 13:36:27,339 reid_baseline.train INFO: CMC Rank-5: 93.23%
+2019-07-06 13:36:27,339 reid_baseline.train INFO: CMC Rank-10: 95.58%
+2019-07-06 13:36:27,340 reid_baseline.train INFO: mAP: 63.13%
+2019-07-06 13:36:27,340 reid_baseline.train INFO: --------------------
+2019-07-06 13:37:57,084 reid_baseline.train INFO: Epoch[11] Iteration[100/105] Loss: 5.001,Acc: 0.260, Base Lr: 2.00e-04
+2019-07-06 13:38:02,570 reid_baseline.train INFO: Epoch 11 done
+2019-07-06 13:38:02,570 reid_baseline.train INFO: --------------------
+2019-07-06 13:38:45,185 reid_baseline.train INFO: Validation Result:
+2019-07-06 13:38:45,186 reid_baseline.train INFO: CMC Rank-1: 82.81%
+2019-07-06 13:38:45,186 reid_baseline.train INFO: CMC Rank-5: 93.29%
+2019-07-06 13:38:45,186 reid_baseline.train INFO: CMC Rank-10: 95.81%
+2019-07-06 13:38:45,186 reid_baseline.train INFO: mAP: 64.30%
+2019-07-06 13:38:45,186 reid_baseline.train INFO: --------------------
+2019-07-06 13:40:14,910 reid_baseline.train INFO: Epoch[12] Iteration[100/105] Loss: 4.690,Acc: 0.305, Base Lr: 2.00e-04
+2019-07-06 13:40:20,395 reid_baseline.train INFO: Epoch 12 done
+2019-07-06 13:40:20,395 reid_baseline.train INFO: --------------------
+2019-07-06 13:41:01,438 reid_baseline.train INFO: Validation Result:
+2019-07-06 13:41:01,439 reid_baseline.train INFO: CMC Rank-1: 83.22%
+2019-07-06 13:41:01,439 reid_baseline.train INFO: CMC Rank-5: 94.12%
+2019-07-06 13:41:01,439 reid_baseline.train INFO: CMC Rank-10: 96.59%
+2019-07-06 13:41:01,439 reid_baseline.train INFO: mAP: 66.07%
+2019-07-06 13:41:01,439 reid_baseline.train INFO: --------------------
+2019-07-06 13:42:30,432 reid_baseline.train INFO: Epoch[13] Iteration[100/105] Loss: 4.404,Acc: 0.348, Base Lr: 2.00e-04
+2019-07-06 13:42:35,885 reid_baseline.train INFO: Epoch 13 done
+2019-07-06 13:42:35,885 reid_baseline.train INFO: --------------------
+2019-07-06 13:43:19,250 reid_baseline.train INFO: Validation Result:
+2019-07-06 13:43:19,250 reid_baseline.train INFO: CMC Rank-1: 84.77%
+2019-07-06 13:43:19,250 reid_baseline.train INFO: CMC Rank-5: 94.39%
+2019-07-06 13:43:19,251 reid_baseline.train INFO: CMC Rank-10: 96.32%
+2019-07-06 13:43:19,251 reid_baseline.train INFO: mAP: 67.34%
+2019-07-06 13:43:19,251 reid_baseline.train INFO: --------------------
+2019-07-06 13:44:49,291 reid_baseline.train INFO: Epoch[14] Iteration[100/105] Loss: 4.143,Acc: 0.387, Base Lr: 2.00e-04
+2019-07-06 13:44:54,825 reid_baseline.train INFO: Epoch 14 done
+2019-07-06 13:44:54,825 reid_baseline.train INFO: --------------------
+2019-07-06 13:45:37,422 reid_baseline.train INFO: Validation Result:
+2019-07-06 13:45:37,423 reid_baseline.train INFO: CMC Rank-1: 85.33%
+2019-07-06 13:45:37,423 reid_baseline.train INFO: CMC Rank-5: 94.95%
+2019-07-06 13:45:37,423 reid_baseline.train INFO: CMC Rank-10: 96.85%
+2019-07-06 13:45:37,423 reid_baseline.train INFO: mAP: 68.58%
+2019-07-06 13:45:37,423 reid_baseline.train INFO: --------------------
+2019-07-06 13:47:07,330 reid_baseline.train INFO: Epoch[15] Iteration[100/105] Loss: 3.909,Acc: 0.422, Base Lr: 2.00e-04
+2019-07-06 13:47:12,869 reid_baseline.train INFO: Epoch 15 done
+2019-07-06 13:47:12,869 reid_baseline.train INFO: --------------------
+2019-07-06 13:47:56,335 reid_baseline.train INFO: Validation Result:
+2019-07-06 13:47:56,336 reid_baseline.train INFO: CMC Rank-1: 85.45%
+2019-07-06 13:47:56,336 reid_baseline.train INFO: CMC Rank-5: 94.77%
+2019-07-06 13:47:56,336 reid_baseline.train INFO: CMC Rank-10: 97.06%
+2019-07-06 13:47:56,336 reid_baseline.train INFO: mAP: 67.78%
+2019-07-06 13:47:56,336 reid_baseline.train INFO: --------------------
+2019-07-06 13:49:26,054 reid_baseline.train INFO: Epoch[16] Iteration[100/105] Loss: 3.695,Acc: 0.455, Base Lr: 2.00e-04
+2019-07-06 13:49:31,547 reid_baseline.train INFO: Epoch 16 done
+2019-07-06 13:49:31,547 reid_baseline.train INFO: --------------------
+2019-07-06 13:50:14,765 reid_baseline.train INFO: Validation Result:
+2019-07-06 13:50:14,766 reid_baseline.train INFO: CMC Rank-1: 86.13%
+2019-07-06 13:50:14,766 reid_baseline.train INFO: CMC Rank-5: 95.16%
+2019-07-06 13:50:14,766 reid_baseline.train INFO: CMC Rank-10: 97.36%
+2019-07-06 13:50:14,766 reid_baseline.train INFO: mAP: 69.34%
+2019-07-06 13:50:14,766 reid_baseline.train INFO: --------------------
+2019-07-06 13:51:44,408 reid_baseline.train INFO: Epoch[17] Iteration[100/105] Loss: 3.500,Acc: 0.484, Base Lr: 2.00e-04
+2019-07-06 13:51:49,908 reid_baseline.train INFO: Epoch 17 done
+2019-07-06 13:51:49,908 reid_baseline.train INFO: --------------------
+2019-07-06 13:52:30,890 reid_baseline.train INFO: Validation Result:
+2019-07-06 13:52:30,890 reid_baseline.train INFO: CMC Rank-1: 86.13%
+2019-07-06 13:52:30,890 reid_baseline.train INFO: CMC Rank-5: 95.01%
+2019-07-06 13:52:30,890 reid_baseline.train INFO: CMC Rank-10: 97.09%
+2019-07-06 13:52:30,890 reid_baseline.train INFO: mAP: 69.33%
+2019-07-06 13:52:30,891 reid_baseline.train INFO: --------------------
+2019-07-06 13:53:59,682 reid_baseline.train INFO: Epoch[18] Iteration[100/105] Loss: 3.325,Acc: 0.511, Base Lr: 2.00e-04
+2019-07-06 13:54:05,079 reid_baseline.train INFO: Epoch 18 done
+2019-07-06 13:54:05,079 reid_baseline.train INFO: --------------------
+2019-07-06 13:54:47,446 reid_baseline.train INFO: Validation Result:
+2019-07-06 13:54:47,447 reid_baseline.train INFO: CMC Rank-1: 86.61%
+2019-07-06 13:54:47,447 reid_baseline.train INFO: CMC Rank-5: 95.37%
+2019-07-06 13:54:47,447 reid_baseline.train INFO: CMC Rank-10: 97.15%
+2019-07-06 13:54:47,447 reid_baseline.train INFO: mAP: 69.96%
+2019-07-06 13:54:47,447 reid_baseline.train INFO: --------------------
+2019-07-06 13:56:16,739 reid_baseline.train INFO: Epoch[19] Iteration[100/105] Loss: 3.166,Acc: 0.535, Base Lr: 2.00e-04
+2019-07-06 13:56:22,224 reid_baseline.train INFO: Epoch 19 done
+2019-07-06 13:56:22,224 reid_baseline.train INFO: --------------------
+2019-07-06 13:57:03,861 reid_baseline.train INFO: Validation Result:
+2019-07-06 13:57:03,862 reid_baseline.train INFO: CMC Rank-1: 86.13%
+2019-07-06 13:57:03,862 reid_baseline.train INFO: CMC Rank-5: 95.34%
+2019-07-06 13:57:03,862 reid_baseline.train INFO: CMC Rank-10: 97.12%
+2019-07-06 13:57:03,862 reid_baseline.train INFO: mAP: 68.88%
+2019-07-06 13:57:03,862 reid_baseline.train INFO: --------------------
+2019-07-06 13:58:33,415 reid_baseline.train INFO: Epoch[20] Iteration[100/105] Loss: 3.018,Acc: 0.557, Base Lr: 1.20e-04
+2019-07-06 13:58:38,935 reid_baseline.train INFO: Epoch 20 done
+2019-07-06 13:58:38,935 reid_baseline.train INFO: --------------------
+2019-07-06 13:59:21,817 reid_baseline.train INFO: Validation Result:
+2019-07-06 13:59:21,817 reid_baseline.train INFO: CMC Rank-1: 88.18%
+2019-07-06 13:59:21,817 reid_baseline.train INFO: CMC Rank-5: 96.47%
+2019-07-06 13:59:21,817 reid_baseline.train INFO: CMC Rank-10: 97.65%
+2019-07-06 13:59:21,817 reid_baseline.train INFO: mAP: 72.71%
+2019-07-06 13:59:21,817 reid_baseline.train INFO: --------------------
+2019-07-06 14:00:51,395 reid_baseline.train INFO: Epoch[21] Iteration[100/105] Loss: 2.884,Acc: 0.577, Base Lr: 1.20e-04
+2019-07-06 14:00:56,944 reid_baseline.train INFO: Epoch 21 done
+2019-07-06 14:00:56,944 reid_baseline.train INFO: --------------------
+2019-07-06 14:01:40,239 reid_baseline.train INFO: Validation Result:
+2019-07-06 14:01:40,239 reid_baseline.train INFO: CMC Rank-1: 88.75%
+2019-07-06 14:01:40,239 reid_baseline.train INFO: CMC Rank-5: 96.47%
+2019-07-06 14:01:40,239 reid_baseline.train INFO: CMC Rank-10: 97.80%
+2019-07-06 14:01:40,239 reid_baseline.train INFO: mAP: 73.26%
+2019-07-06 14:01:40,239 reid_baseline.train INFO: --------------------
+2019-07-06 14:03:09,268 reid_baseline.train INFO: Epoch[22] Iteration[100/105] Loss: 2.760,Acc: 0.596, Base Lr: 1.20e-04
+2019-07-06 14:03:14,700 reid_baseline.train INFO: Epoch 22 done
+2019-07-06 14:03:14,700 reid_baseline.train INFO: --------------------
+2019-07-06 14:03:59,648 reid_baseline.train INFO: Validation Result:
+2019-07-06 14:03:59,648 reid_baseline.train INFO: CMC Rank-1: 88.48%
+2019-07-06 14:03:59,648 reid_baseline.train INFO: CMC Rank-5: 96.38%
+2019-07-06 14:03:59,649 reid_baseline.train INFO: CMC Rank-10: 97.86%
+2019-07-06 14:03:59,649 reid_baseline.train INFO: mAP: 73.35%
+2019-07-06 14:03:59,649 reid_baseline.train INFO: --------------------
+2019-07-06 14:05:28,415 reid_baseline.train INFO: Epoch[23] Iteration[100/105] Loss: 2.647,Acc: 0.613, Base Lr: 1.20e-04
+2019-07-06 14:05:33,859 reid_baseline.train INFO: Epoch 23 done
+2019-07-06 14:05:33,859 reid_baseline.train INFO: --------------------
+2019-07-06 14:06:17,599 reid_baseline.train INFO: Validation Result:
+2019-07-06 14:06:17,599 reid_baseline.train INFO: CMC Rank-1: 88.54%
+2019-07-06 14:06:17,599 reid_baseline.train INFO: CMC Rank-5: 96.70%
+2019-07-06 14:06:17,599 reid_baseline.train INFO: CMC Rank-10: 97.95%
+2019-07-06 14:06:17,599 reid_baseline.train INFO: mAP: 73.82%
+2019-07-06 14:06:17,600 reid_baseline.train INFO: --------------------
+2019-07-06 14:07:46,581 reid_baseline.train INFO: Epoch[24] Iteration[100/105] Loss: 2.542,Acc: 0.629, Base Lr: 1.20e-04
+2019-07-06 14:07:52,046 reid_baseline.train INFO: Epoch 24 done
+2019-07-06 14:07:52,046 reid_baseline.train INFO: --------------------
+2019-07-06 14:08:35,177 reid_baseline.train INFO: Validation Result:
+2019-07-06 14:08:35,177 reid_baseline.train INFO: CMC Rank-1: 88.72%
+2019-07-06 14:08:35,177 reid_baseline.train INFO: CMC Rank-5: 96.59%
+2019-07-06 14:08:35,177 reid_baseline.train INFO: CMC Rank-10: 98.10%
+2019-07-06 14:08:35,177 reid_baseline.train INFO: mAP: 73.51%
+2019-07-06 14:08:35,178 reid_baseline.train INFO: --------------------
+2019-07-06 14:10:04,209 reid_baseline.train INFO: Epoch[25] Iteration[100/105] Loss: 2.446,Acc: 0.643, Base Lr: 1.20e-04
+2019-07-06 14:10:09,661 reid_baseline.train INFO: Epoch 25 done
+2019-07-06 14:10:09,662 reid_baseline.train INFO: --------------------
+2019-07-06 14:10:50,606 reid_baseline.train INFO: Validation Result:
+2019-07-06 14:10:50,606 reid_baseline.train INFO: CMC Rank-1: 88.90%
+2019-07-06 14:10:50,606 reid_baseline.train INFO: CMC Rank-5: 96.76%
+2019-07-06 14:10:50,607 reid_baseline.train INFO: CMC Rank-10: 97.89%
+2019-07-06 14:10:50,607 reid_baseline.train INFO: mAP: 73.49%
+2019-07-06 14:10:50,607 reid_baseline.train INFO: --------------------
+2019-07-06 14:12:19,291 reid_baseline.train INFO: Epoch[26] Iteration[100/105] Loss: 2.358,Acc: 0.657, Base Lr: 1.20e-04
+2019-07-06 14:12:24,819 reid_baseline.train INFO: Epoch 26 done
+2019-07-06 14:12:24,820 reid_baseline.train INFO: --------------------
+2019-07-06 14:13:09,464 reid_baseline.train INFO: Validation Result:
+2019-07-06 14:13:09,464 reid_baseline.train INFO: CMC Rank-1: 88.95%
+2019-07-06 14:13:09,464 reid_baseline.train INFO: CMC Rank-5: 96.20%
+2019-07-06 14:13:09,465 reid_baseline.train INFO: CMC Rank-10: 97.60%
+2019-07-06 14:13:09,465 reid_baseline.train INFO: mAP: 73.46%
+2019-07-06 14:13:09,465 reid_baseline.train INFO: --------------------
+2019-07-06 14:14:38,624 reid_baseline.train INFO: Epoch[27] Iteration[100/105] Loss: 2.275,Acc: 0.669, Base Lr: 1.20e-04
+2019-07-06 14:14:44,095 reid_baseline.train INFO: Epoch 27 done
+2019-07-06 14:14:44,096 reid_baseline.train INFO: --------------------
+2019-07-06 14:15:26,804 reid_baseline.train INFO: Validation Result:
+2019-07-06 14:15:26,804 reid_baseline.train INFO: CMC Rank-1: 89.13%
+2019-07-06 14:15:26,804 reid_baseline.train INFO: CMC Rank-5: 96.44%
+2019-07-06 14:15:26,804 reid_baseline.train INFO: CMC Rank-10: 97.83%
+2019-07-06 14:15:26,804 reid_baseline.train INFO: mAP: 73.81%
+2019-07-06 14:15:26,804 reid_baseline.train INFO: --------------------
+2019-07-06 14:16:55,922 reid_baseline.train INFO: Epoch[28] Iteration[100/105] Loss: 2.198,Acc: 0.681, Base Lr: 1.20e-04
+2019-07-06 14:17:01,378 reid_baseline.train INFO: Epoch 28 done
+2019-07-06 14:17:01,378 reid_baseline.train INFO: --------------------
+2019-07-06 14:17:44,718 reid_baseline.train INFO: Validation Result:
+2019-07-06 14:17:44,719 reid_baseline.train INFO: CMC Rank-1: 88.36%
+2019-07-06 14:17:44,719 reid_baseline.train INFO: CMC Rank-5: 96.47%
+2019-07-06 14:17:44,719 reid_baseline.train INFO: CMC Rank-10: 97.57%
+2019-07-06 14:17:44,719 reid_baseline.train INFO: mAP: 73.12%
+2019-07-06 14:17:44,719 reid_baseline.train INFO: --------------------
+2019-07-06 14:19:13,718 reid_baseline.train INFO: Epoch[29] Iteration[100/105] Loss: 2.127,Acc: 0.691, Base Lr: 1.20e-04
+2019-07-06 14:19:19,123 reid_baseline.train INFO: Epoch 29 done
+2019-07-06 14:19:19,123 reid_baseline.train INFO: --------------------
+2019-07-06 14:20:01,309 reid_baseline.train INFO: Validation Result:
+2019-07-06 14:20:01,309 reid_baseline.train INFO: CMC Rank-1: 88.27%
+2019-07-06 14:20:01,309 reid_baseline.train INFO: CMC Rank-5: 96.41%
+2019-07-06 14:20:01,310 reid_baseline.train INFO: CMC Rank-10: 97.83%
+2019-07-06 14:20:01,310 reid_baseline.train INFO: mAP: 73.99%
+2019-07-06 14:20:01,310 reid_baseline.train INFO: --------------------
+2019-07-06 14:21:30,709 reid_baseline.train INFO: Epoch[30] Iteration[100/105] Loss: 2.059,Acc: 0.701, Base Lr: 7.20e-05
+2019-07-06 14:21:36,198 reid_baseline.train INFO: Epoch 30 done
+2019-07-06 14:21:36,198 reid_baseline.train INFO: --------------------
+2019-07-06 14:22:18,991 reid_baseline.train INFO: Validation Result:
+2019-07-06 14:22:18,992 reid_baseline.train INFO: CMC Rank-1: 89.37%
+2019-07-06 14:22:18,992 reid_baseline.train INFO: CMC Rank-5: 96.62%
+2019-07-06 14:22:18,992 reid_baseline.train INFO: CMC Rank-10: 97.98%
+2019-07-06 14:22:18,992 reid_baseline.train INFO: mAP: 75.35%
+2019-07-06 14:22:18,992 reid_baseline.train INFO: --------------------

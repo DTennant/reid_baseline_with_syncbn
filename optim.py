@@ -50,7 +50,8 @@ def make_optimizer(cfg, model, num_gpus=1):
     for key, value in model.named_parameters():
         if not value.requires_grad:
             continue
-        lr = cfg.SOLVER.BASE_LR# * num_gpus
+        lr = cfg.SOLVER.BASE_LR * num_gpus
+        # linear scaling rule
         weight_decay = cfg.SOLVER.WEIGHT_DECAY
         if "bias" in key:
             lr = cfg.SOLVER.BASE_LR * cfg.SOLVER.BIAS_LR_FACTOR
