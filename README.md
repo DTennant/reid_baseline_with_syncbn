@@ -28,7 +28,9 @@ CUDA_VISIBLE_DEVICES=1,2 python main.py -t -c configs/debug_multi-gpu.yml TEST.W
 
 ## Result
 
-I only trained the model with 30 epoch, so the model may not be fully converged
+I only trained the model with 30 epoch, so the model may not be fully converged.
+
+**Note that the Resnet50 model is trained with Warmup, Random erasing augmentation, Last stride=1 and BNNeck.** 
 
 ### Result training with one GPU
 
