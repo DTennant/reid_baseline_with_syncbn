@@ -7,6 +7,10 @@ from evaluate import euclidean_dist
 from utils import AvgerageMeter
 import os.path as osp
 import os
+try:
+    from apex import amp
+except:
+    pass
 
 
 class BaseTrainer(object):
@@ -40,6 +44,18 @@ class BaseTrainer(object):
         self.model.to(self.device)
 
         self.logger.info('Trainer Built')
+
+        if cfg.SOLVER.FP16:
+            try:
+                self.model, self.optim = amp.initialize(self.model, self.optim,
+                                                        opt_level='O1')
+                self.mix_precision = True
+                self.logger.info('Using fp16 training')
+            except:
+                self.mix_precision = False
+                self.logger.info('apex not installed, using fp32 training'
+                      'install help: https://github.com/NVIDIA/apex/issue/259')
+
 
     def _get_train_data(self):
         try:
@@ -80,7 +96,11 @@ class BaseTrainer(object):
         img, target = img.cuda(), target.cuda()
         score, feat = self.model(img)
         loss = self.loss_func(score, feat, target)
-        loss.backward()
+        if self.mix_precision:
+            with amp.scale_loss(loss, self.optim) as scaled_loss:
+                scaled_loss.backward()
+        else:
+            loss.backward()
         self.optim.step()
 
         acc = (score.max(1)[1] == target).float().mean()
