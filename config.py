@@ -110,6 +110,7 @@ _C.TEST.IMS_PER_BATCH = 128
 _C.TEST.WEIGHT = ""
 _C.TEST.DEBUG = False
 _C.TEST.MULTI_GPU = False
+_C.TEST.CMC = [1,5,10]
 
 # ---------------------------------------------------------------------------- #
 # Misc options

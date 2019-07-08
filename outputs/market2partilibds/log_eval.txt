@@ -1,0 +1,62 @@
+2019-07-08 18:15:04,156 reid_baseline.eval INFO: Running with config:
+DATALOADER:
+  NUM_INSTANCE: 8
+  NUM_WORKERS: 4
+  SAMPLER: softmax_triplet
+DATASETS:
+  DATA_PATH: /home/zbc/data/market1501
+  GALLERY_PATH: ../partial_reid/Partial_iLIDS_rename/gallery
+  NAMES: market1501
+  QUERY_PATH: ../partial_reid/Partial_iLIDS_rename/query
+  TRAIN_PATH: bounding_box_train
+INPUT:
+  PADDING: 0
+  PIXEL_MEAN: [0.5, 0.5, 0.5]
+  PIXEL_STD: [0.5, 0.5, 0.5]
+  PROB: 0.5
+  RE_PROB: 0.5
+  SIZE_TEST: [384, 256]
+  SIZE_TRAIN: [384, 256]
+MODEL:
+  DEVICE: cuda
+  LABEL_SMOOTH: False
+  LAST_STRIDE: 1
+  NAME: resnet50
+  PRETRAIN_PATH: /home/zbc/.torch/models/resnet50-19c8e357.pth
+OUTPUT_DIR: /home/zbc/ReID/outputs/market2partilibds
+SOLVER:
+  BASE_LR: 0.0001
+  BIAS_LR_FACTOR: 1
+  CHECKPOINT_PERIOD: 1
+  CYTHON: False
+  EVAL_PERIOD: 1
+  FP16: True
+  GAMMA: 0.6
+  IMS_PER_BATCH: 64
+  LOG_PERIOD: 100
+  MARGIN: 0.3
+  MAX_EPOCHS: 120
+  MOMENTUM: 0.9
+  OPTIMIZER_NAME: Adam
+  STEPS: (20, 30, 45, 60, 75, 90, 105, 120, 135, 150, 165, 180, 195, 210, 225, 240, 255)
+  WARMUP_FACTOR: 0.01
+  WARMUP_ITERS: 10
+  WARMUP_METHOD: linear
+  WEIGHT_DECAY: 0.0005
+  WEIGHT_DECAY_BIAS: 0.0005
+TEST:
+  CMC: [1, 3]
+  DEBUG: True
+  IMS_PER_BATCH: 16
+  MULTI_GPU: False
+  WEIGHT: /home/zbc/ReID/outputs/market2partilibds/resnet50_epoch12.pth
+2019-07-08 18:15:14,299 reid_baseline.eval INFO: Validation Result:
+2019-07-08 18:15:14,299 reid_baseline.eval INFO: CMC Rank-1: 45.38%
+2019-07-08 18:15:14,300 reid_baseline.eval INFO: CMC Rank-3: 57.14%
+2019-07-08 18:15:14,300 reid_baseline.eval INFO: mAP: 55.76%
+2019-07-08 18:15:14,300 reid_baseline.eval INFO: --------------------
+2019-07-08 18:15:14,678 reid_baseline.eval INFO: ReRanking Result:
+2019-07-08 18:15:14,678 reid_baseline.eval INFO: CMC Rank-1: 28.57%
+2019-07-08 18:15:14,678 reid_baseline.eval INFO: CMC Rank-3: 48.74%
+2019-07-08 18:15:14,678 reid_baseline.eval INFO: mAP: 42.62%
+2019-07-08 18:15:14,679 reid_baseline.eval INFO: --------------------

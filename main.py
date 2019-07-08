@@ -148,9 +148,8 @@ def test(args):
                          query_camid.numpy(), gallery_camid.numpy(),
                          use_cython=True)
     logger.info('Validation Result:')
-    logger.info('CMC Rank-1: {:.2%}'.format(cmc[1 - 1]))
-    logger.info('CMC Rank-5: {:.2%}'.format(cmc[5 - 1]))
-    logger.info('CMC Rank-10: {:.2%}'.format(cmc[10 - 1]))
+    for r in cfg.TEST.CMC:
+        logger.info('CMC Rank-{}: {:.2%}'.format(r, cmc[r-1]))
     logger.info('mAP: {:.2%}'.format(mAP))
     logger.info('-' * 20)
 
@@ -160,9 +159,8 @@ def test(args):
                          use_cython=True)
 
     logger.info('ReRanking Result:')
-    logger.info('CMC Rank-1: {:.2%}'.format(cmc[1 - 1]))
-    logger.info('CMC Rank-5: {:.2%}'.format(cmc[5 - 1]))
-    logger.info('CMC Rank-10: {:.2%}'.format(cmc[10 - 1]))
+    for r in cfg.TEST.CMC:
+        logger.info('CMC Rank-{}: {:.2%}'.format(r, cmc[r-1]))
     logger.info('mAP: {:.2%}'.format(mAP))
     logger.info('-' * 20)
 

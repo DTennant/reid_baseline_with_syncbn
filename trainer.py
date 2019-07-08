@@ -83,11 +83,11 @@ class BaseTrainer(object):
         self.scheduler.step()
         self.logger.info('Epoch {} done'.format(self.train_epoch))
         self.logger.info('-' * 20)
-        self.train_epoch += 1
         if self.train_epoch % self.checkpoint_period == 0:
             self.save()
         if self.train_epoch % self.eval_period == 0:
             self.evaluate()
+        self.train_epoch += 1
 
     def step(self, batch):
         self.model.train()
@@ -141,17 +141,16 @@ class BaseTrainer(object):
                              query_camid.numpy(), gallery_camid.numpy(),
                              use_cython=True)
         self.logger.info('Validation Result:')
-        self.logger.info('CMC Rank-1: {:.2%}'.format(cmc[1 - 1]))
-        self.logger.info('CMC Rank-5: {:.2%}'.format(cmc[5 - 1]))
-        self.logger.info('CMC Rank-10: {:.2%}'.format(cmc[10 - 1]))
+        for r in self.cfg.TEST.CMC:
+            self.logger.info('CMC Rank-{}: {:.2%}'.format(r, cmc[r-1]))
         self.logger.info('mAP: {:.2%}'.format(mAP))
         self.logger.info('-' * 20)
 
     def save(self):
         torch.save(self.model.state_dict(), osp.join(self.output_dir,
-                self.cfg.MODEL.NAME + '_epoch' + str(self.train_epoch-1) + '.pth'))
+                self.cfg.MODEL.NAME + '_epoch' + str(self.train_epoch) + '.pth'))
         torch.save(self.optim.state_dict(), osp.join(self.output_dir,
-                self.cfg.MODEL.NAME + '_epoch'+ str(self.train_epoch-1) + '_optim.pth'))
+                self.cfg.MODEL.NAME + '_epoch'+ str(self.train_epoch) + '_optim.pth'))
 
 
 

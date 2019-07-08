@@ -1,0 +1,55 @@
+MODEL:
+  PRETRAIN_PATH: '/home/zbc/.torch/models/resnet50-19c8e357.pth'
+  
+INPUT:
+  SIZE_TRAIN: [384, 256]
+  SIZE_TEST: [384, 256]
+  PIXEL_MEAN: [0.5, 0.5, 0.5]
+  PIXEL_STD: [0.5, 0.5, 0.5]
+  PROB: 0.5 # random horizontal flip
+  RE_PROB: 0.5 # random erasing 
+  PADDING: 0
+
+DATASETS:
+  NAMES: 'market1501'
+  DATA_PATH: '/home/zbc/data/market1501'
+  TRAIN_PATH: 'bounding_box_train'
+  QUERY_PATH: '../partial_reid/Partial_iLIDS_rename/query'
+  GALLERY_PATH: '../partial_reid/Partial_iLIDS_rename/gallery'
+
+DATALOADER:
+  SAMPLER: 'softmax_triplet'
+  NUM_INSTANCE: 8
+  NUM_WORKERS: 4
+
+SOLVER:
+  OPTIMIZER_NAME: 'Adam'
+  MAX_EPOCHS: 120
+  BASE_LR: 0.0001
+  BIAS_LR_FACTOR: 1
+  WEIGHT_DECAY: 0.0005
+  WEIGHT_DECAY_BIAS: 0.0005
+  IMS_PER_BATCH: 64
+  FP16: True
+
+  STEPS: [20, 30, 45, 60, 75, 90, 105, 120, 135, 150, 165, 180, 195, 210, 225, 240, 255]
+  GAMMA: 0.6
+
+  WARMUP_FACTOR: 0.01
+  WARMUP_ITERS: 10
+  WARMUP_METHOD: 'linear'
+
+  CHECKPOINT_PERIOD: 1
+  LOG_PERIOD: 100
+  EVAL_PERIOD: 1
+
+TEST:
+  IMS_PER_BATCH: 16
+  DEBUG: True
+  WEIGHT: "path"
+  CMC: [1,3]
+  
+
+OUTPUT_DIR: "/home/zbc/ReID/outputs/market2partilibds"
+
+
