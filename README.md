@@ -86,3 +86,18 @@ I only trained the model with 30 epoch, so the model may not be fully converged.
 2019-07-07 12:31:01,270 reid_baseline.eval INFO: mAP: 90.22%
 2019-07-07 12:31:01,270 reid_baseline.eval INFO: --------------------
 ```
+
+### Result training on Market1501, testing on Partial-iLIDS
+
+```bash
+2019-07-08 18:15:14,299 reid_baseline.eval INFO: Validation Result:
+2019-07-08 18:15:14,299 reid_baseline.eval INFO: CMC Rank-1: 45.38%
+2019-07-08 18:15:14,300 reid_baseline.eval INFO: CMC Rank-3: 57.14%
+2019-07-08 18:15:14,300 reid_baseline.eval INFO: mAP: 55.76%
+2019-07-08 18:15:14,300 reid_baseline.eval INFO: --------------------
+2019-07-08 18:15:14,678 reid_baseline.eval INFO: ReRanking Result:
+2019-07-08 18:15:14,678 reid_baseline.eval INFO: CMC Rank-1: 28.57%
+2019-07-08 18:15:14,678 reid_baseline.eval INFO: CMC Rank-3: 48.74%
+2019-07-08 18:15:14,678 reid_baseline.eval INFO: mAP: 42.62%
+2019-07-08 18:15:14,679 reid_baseline.eval INFO: --------------------
+```
