@@ -36,7 +36,7 @@ from optim import make_optimizer, WarmupMultiStepLR
 
 from evaluate import eval_func, euclidean_dist, re_rank
 from tqdm import tqdm
-
+import shutil
 
 def parse_args():
     parser = argparse.ArgumentParser(description="ReID training")
@@ -44,6 +44,7 @@ def parse_args():
                         help='the path to the training config')
     parser.add_argument('-t', '--test', action='store_true',
                         default=False, help='Model test')
+    parser.add_argument('--local_rank', default=0, type=int)
     parser.add_argument('opts', help='overwriting the training config' 
                         'from commandline', default=None,
                         nargs=argparse.REMAINDER)
@@ -66,6 +67,7 @@ def train(args):
     output_dir = cfg.OUTPUT_DIR
     if output_dir and not os.path.exists(output_dir):
         os.makedirs(output_dir)
+    shutil.copy(args.config_file, cfg.OUTPUT_DIR)
 
     num_gpus = torch.cuda.device_count()
 
@@ -77,21 +79,11 @@ def train(args):
     train_dl, val_dl, num_query, num_classes = make_dataloader(cfg, num_gpus) 
 
     model = build_model(cfg, num_classes)
-    if num_gpus > 1:
-        # convert to use sync_bn
-        model = nn.DataParallel(model)
-        model = convert_model(model)
-        logger.info('More than one gpu used, convert model to use SyncBN.')
 
     loss_func = make_loss(cfg, num_classes)
 
-    optim = make_optimizer(cfg, model, num_gpus)
-    scheduler = WarmupMultiStepLR(optim, cfg.SOLVER.STEPS, cfg.SOLVER.GAMMA,
-                                  cfg.SOLVER.WARMUP_FACTOR,
-                                  cfg.SOLVER.WARMUP_ITERS, cfg.SOLVER.WARMUP_METHOD)
-
     trainer = BaseTrainer(cfg, model, train_dl, val_dl,
-                          optim, scheduler, loss_func, num_query)
+                          loss_func, num_query, num_gpus)
 
     for epoch in range(trainer.epochs):
         for batch in trainer.train_dl:

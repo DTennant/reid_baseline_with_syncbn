@@ -1,4 +1,5 @@
 import torch
+import torch.nn as nn
 from tqdm import tqdm
 import numpy as np
 import logging 
@@ -7,24 +8,24 @@ from evaluate import euclidean_dist
 from utils import AvgerageMeter
 import os.path as osp
 import os
+from model import convert_model 
+from optim import make_optimizer, WarmupMultiStepLR
+
 try:
     from apex import amp
+    from apex.parallel import DistributedDataParallel as DDP
+    import apex
 except:
     pass
 
 
 class BaseTrainer(object):
     def __init__(self, cfg, model, train_dl, val_dl, 
-                 optimizer, scheduler, loss_func, num_query):
+                 loss_func, num_query, num_gpus):
         self.cfg = cfg
         self.model = model
         self.train_dl = train_dl
         self.val_dl = val_dl
-        self.train_iter = iter(train_dl)
-        self.val_iter = iter(val_dl)
-        self.optim = optimizer
-        self.scheduler = scheduler
-        self.scheduler.step()
         self.loss_func = loss_func
         self.num_query = num_query
 
@@ -41,32 +42,65 @@ class BaseTrainer(object):
         self.device = cfg.MODEL.DEVICE
         self.epochs = cfg.SOLVER.MAX_EPOCHS
 
-        self.model.to(self.device)
+        if num_gpus > 1:
+            # convert to use sync_bn
+            self.logger.info('More than one gpu used, convert model to use SyncBN.')
+            if cfg.SOLVER.FP16:
+                self.logger.info('Using apex to perform SyncBN and FP16 training')
+                torch.distributed.init_process_group(backend='nccl', 
+                                                     init_method='env://')
+                self.model = apex.parallel.convert_syncbn_model(self.model)
+            else:
+                # Multi-GPU model without FP16
+                self.model = nn.DataParallel(self.model)
+                self.model = convert_model(self.model)
+                self.model.cuda()
+                self.logger.info('Using pytorch SyncBN implementation')
 
-        self.logger.info('Trainer Built')
-
-        if cfg.SOLVER.FP16:
-            try:
+                self.optim = make_optimizer(cfg, self.model, num_gpus)
+                self.scheduler = WarmupMultiStepLR(self.optim, cfg.SOLVER.STEPS, cfg.SOLVER.GAMMA,
+                                              cfg.SOLVER.WARMUP_FACTOR,
+                                              cfg.SOLVER.WARMUP_ITERS, cfg.SOLVER.WARMUP_METHOD)
+                self.scheduler.step()
+                self.mix_precision = False
+                self.logger.info('Trainer Built')
+                return
+        else:
+            # Single GPU model
+            self.model.cuda()
+            self.optim = make_optimizer(cfg, self.model, num_gpus)
+            self.scheduler = WarmupMultiStepLR(self.optim, cfg.SOLVER.STEPS, cfg.SOLVER.GAMMA,
+                                          cfg.SOLVER.WARMUP_FACTOR,
+                                          cfg.SOLVER.WARMUP_ITERS, cfg.SOLVER.WARMUP_METHOD)
+            self.scheduler.step()
+            self.mix_precision = False
+            if cfg.SOLVER.FP16:
+                # Single model using FP16
                 self.model, self.optim = amp.initialize(self.model, self.optim,
                                                         opt_level='O1')
                 self.mix_precision = True
                 self.logger.info('Using fp16 training')
-            except:
-                self.mix_precision = False
-                self.logger.info('apex not installed, using fp32 training'
-                      'install help: https://github.com/NVIDIA/apex/issue/259')
+            self.logger.info('Trainer Built')
+            return
 
+        # TODO: Multi-GPU model with FP16
+        raise NotImplementedError
+        self.model.to(self.device)
+        self.optim = make_optimizer(cfg, self.model, num_gpus)
+        self.scheduler = WarmupMultiStepLR(self.optim, cfg.SOLVER.STEPS, cfg.SOLVER.GAMMA,
+                                      cfg.SOLVER.WARMUP_FACTOR,
+                                      cfg.SOLVER.WARMUP_ITERS, cfg.SOLVER.WARMUP_METHOD)
+        self.scheduler.step()
 
-    def _get_train_data(self):
-        try:
-            batch = next(self.train_iter)
-            self.batch_cnt += 1
-            self._handle_new_batch()
-        except StopIteration:
-            self.train_iter = iter(self.train_dl)
-            batch = next(self.train_iter)
-            self._handle_new_epoch()
-        return batch
+        self.model, self.optim = amp.initialize(self.model, self.optim,
+                                                opt_level='O1')
+        self.mix_precision = True
+        self.logger.info('Using fp16 training')
+
+        self.model = DDP(self.model, delay_allreduce=True)
+        self.logger.info('Convert model using apex')
+        self.logger.info('Trainer Built')
+
 
     def handle_new_batch(self):
         self.batch_cnt += 1
@@ -139,7 +173,7 @@ class BaseTrainer(object):
 
         cmc, mAP, _ = eval_func(distmat.numpy(), query_pid.numpy(), gallery_pid.numpy(), 
                              query_camid.numpy(), gallery_camid.numpy(),
-                             use_cython=True)
+                             use_cython=self.cfg.SOLVER.CYTHON)
         self.logger.info('Validation Result:')
         for r in self.cfg.TEST.CMC:
             self.logger.info('CMC Rank-{}: {:.2%}'.format(r, cmc[r-1]))
