@@ -24,6 +24,9 @@ CUDA_VISIBLE_DEVICES=1 python main.py -t -c configs/debug.yml TEST.WEIGHT /path/
 CUDA_VISIBLE_DEVICES=1,2 python main.py -c configs/debug_multi-gpu.yml
 # testing with multi-GPU
 CUDA_VISIBLE_DEVICES=1,2 python main.py -t -c configs/debug_multi-gpu.yml TEST.WEIGHT /path/to/saved/weights
+
+# fp16 training
+CUDA_VISIBLE_DEVICES=1 python main.py -c configs/debug.yml SOLVER.FP16 True
 ```
 
 ## Result
@@ -65,4 +68,21 @@ I only trained the model with 30 epoch, so the model may not be fully converged.
 2019-07-06 14:27:23,450 reid_baseline.eval INFO: CMC Rank-10: 96.79%
 2019-07-06 14:27:23,450 reid_baseline.eval INFO: mAP: 88.92%
 2019-07-06 14:27:23,450 reid_baseline.eval INFO: --------------------
+```
+
+### Result training with FP16
+
+```bash
+2019-07-07 12:29:20,649 reid_baseline.eval INFO: Validation Result:
+2019-07-07 12:29:20,650 reid_baseline.eval INFO: CMC Rank-1: 90.44%
+2019-07-07 12:29:20,650 reid_baseline.eval INFO: CMC Rank-5: 96.47%
+2019-07-07 12:29:20,650 reid_baseline.eval INFO: CMC Rank-10: 98.13%
+2019-07-07 12:29:20,650 reid_baseline.eval INFO: mAP: 75.88%
+2019-07-07 12:29:20,650 reid_baseline.eval INFO: --------------------
+2019-07-07 12:31:01,269 reid_baseline.eval INFO: ReRanking Result:
+2019-07-07 12:31:01,270 reid_baseline.eval INFO: CMC Rank-1: 93.14%
+2019-07-07 12:31:01,270 reid_baseline.eval INFO: CMC Rank-5: 96.26%
+2019-07-07 12:31:01,270 reid_baseline.eval INFO: CMC Rank-10: 97.12%
+2019-07-07 12:31:01,270 reid_baseline.eval INFO: mAP: 90.22%
+2019-07-07 12:31:01,270 reid_baseline.eval INFO: --------------------
 ```
