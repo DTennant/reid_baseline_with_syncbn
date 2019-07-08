@@ -59,4 +59,4 @@ def eval_func(distmat, q_pids, g_pids, q_camids, g_camids, max_rank=50, use_cyth
     all_cmc = all_cmc.sum(0) / num_valid_q
     mAP = np.mean(all_AP)
 
-    return all_cmc, mAP
+    return all_cmc, mAP, all_AP

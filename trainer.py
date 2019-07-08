@@ -117,7 +117,7 @@ class BaseTrainer(object):
         with torch.no_grad():
             for batch in tqdm(self.val_dl, total=len(self.val_dl),
                              leave=False):
-                data, pid, camid = batch
+                data, pid, camid, _ = batch
                 data = data.cuda()
                 feat = self.model(data).detach().cpu()
                 feats.append(feat)
@@ -137,7 +137,7 @@ class BaseTrainer(object):
         
         distmat = euclidean_dist(query_feat, gallery_feat)
 
-        cmc, mAP = eval_func(distmat.numpy(), query_pid.numpy(), gallery_pid.numpy(), 
+        cmc, mAP, _ = eval_func(distmat.numpy(), query_pid.numpy(), gallery_pid.numpy(), 
                              query_camid.numpy(), gallery_camid.numpy(),
                              use_cython=True)
         self.logger.info('Validation Result:')

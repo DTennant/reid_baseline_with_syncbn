@@ -4710,14 +4710,14 @@ static PyObject *__pyx_f_15eval_metrics_cy_eval_cuhk03_cy(__Pyx_memviewslice __p
  *         mAP += all_AP[q_idx]
  *     mAP /= num_valid_q             # <<<<<<<<<<<<<<
  * 
- *     return np.asarray(avg_cmc).astype(np.float32), mAP
+ *     return np.asarray(avg_cmc).astype(np.float32), mAP, all_AP
  */
   __pyx_v_mAP = (__pyx_v_mAP / __pyx_v_num_valid_q);
 
   /* "eval_metrics_cy.pyx":150
  *     mAP /= num_valid_q
  * 
- *     return np.asarray(avg_cmc).astype(np.float32), mAP             # <<<<<<<<<<<<<<
+ *     return np.asarray(avg_cmc).astype(np.float32), mAP, all_AP             # <<<<<<<<<<<<<<
  * 
  * 
  */
@@ -4771,16 +4771,21 @@ static PyObject *__pyx_f_15eval_metrics_cy_eval_cuhk03_cy(__Pyx_memviewslice __p
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_t_2 = PyFloat_FromDouble(__pyx_v_mAP); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 150, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_5 = PyTuple_New(2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 150, __pyx_L1_error)
+  __pyx_t_5 = __pyx_memoryview_fromslice(__pyx_v_all_AP, 1, (PyObject *(*)(char *)) __pyx_memview_get_float, (int (*)(char *, PyObject *)) __pyx_memview_set_float, 0);; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 150, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_4 = PyTuple_New(3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 150, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
   __Pyx_GIVEREF(__pyx_t_8);
-  PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_8);
+  PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_8);
   __Pyx_GIVEREF(__pyx_t_2);
-  PyTuple_SET_ITEM(__pyx_t_5, 1, __pyx_t_2);
+  PyTuple_SET_ITEM(__pyx_t_4, 1, __pyx_t_2);
+  __Pyx_GIVEREF(__pyx_t_5);
+  PyTuple_SET_ITEM(__pyx_t_4, 2, __pyx_t_5);
   __pyx_t_8 = 0;
   __pyx_t_2 = 0;
-  __pyx_r = __pyx_t_5;
   __pyx_t_5 = 0;
+  __pyx_r = __pyx_t_4;
+  __pyx_t_4 = 0;
   goto __pyx_L0;
 
   /* "eval_metrics_cy.pyx":32
@@ -6038,14 +6043,14 @@ static PyObject *__pyx_f_15eval_metrics_cy_eval_market1501_cy(__Pyx_memviewslice
  *         mAP += all_AP[q_idx]
  *     mAP /= num_valid_q             # <<<<<<<<<<<<<<
  * 
- *     return np.asarray(avg_cmc).astype(np.float32), mAP
+ *     return np.asarray(avg_cmc).astype(np.float32), mAP, all_AP
  */
   __pyx_v_mAP = (__pyx_v_mAP / __pyx_v_num_valid_q);
 
   /* "eval_metrics_cy.pyx":240
  *     mAP /= num_valid_q
  * 
- *     return np.asarray(avg_cmc).astype(np.float32), mAP             # <<<<<<<<<<<<<<
+ *     return np.asarray(avg_cmc).astype(np.float32), mAP, all_AP             # <<<<<<<<<<<<<<
  * 
  * 
  */
@@ -6099,16 +6104,21 @@ static PyObject *__pyx_f_15eval_metrics_cy_eval_market1501_cy(__Pyx_memviewslice
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_t_2 = PyFloat_FromDouble(__pyx_v_mAP); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 240, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_7 = PyTuple_New(2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 240, __pyx_L1_error)
+  __pyx_t_7 = __pyx_memoryview_fromslice(__pyx_v_all_AP, 1, (PyObject *(*)(char *)) __pyx_memview_get_float, (int (*)(char *, PyObject *)) __pyx_memview_set_float, 0);; if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 240, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
+  __pyx_t_5 = PyTuple_New(3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 240, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
   __Pyx_GIVEREF(__pyx_t_3);
-  PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_3);
+  PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_3);
   __Pyx_GIVEREF(__pyx_t_2);
-  PyTuple_SET_ITEM(__pyx_t_7, 1, __pyx_t_2);
+  PyTuple_SET_ITEM(__pyx_t_5, 1, __pyx_t_2);
+  __Pyx_GIVEREF(__pyx_t_7);
+  PyTuple_SET_ITEM(__pyx_t_5, 2, __pyx_t_7);
   __pyx_t_3 = 0;
   __pyx_t_2 = 0;
-  __pyx_r = __pyx_t_7;
   __pyx_t_7 = 0;
+  __pyx_r = __pyx_t_5;
+  __pyx_t_5 = 0;
   goto __pyx_L0;
 
   /* "eval_metrics_cy.pyx":153

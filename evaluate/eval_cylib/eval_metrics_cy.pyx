@@ -147,7 +147,7 @@ cpdef eval_cuhk03_cy(float[:,:] distmat, long[:] q_pids, long[:]g_pids,
         mAP += all_AP[q_idx]
     mAP /= num_valid_q
 
-    return np.asarray(avg_cmc).astype(np.float32), mAP
+    return np.asarray(avg_cmc).astype(np.float32), mAP, all_AP
 
 
 cpdef eval_market1501_cy(float[:,:] distmat, long[:] q_pids, long[:]g_pids,
@@ -237,7 +237,7 @@ cpdef eval_market1501_cy(float[:,:] distmat, long[:] q_pids, long[:]g_pids,
         mAP += all_AP[q_idx]
     mAP /= num_valid_q
 
-    return np.asarray(avg_cmc).astype(np.float32), mAP
+    return np.asarray(avg_cmc).astype(np.float32), mAP, all_AP
 
 
 # Compute the cumulative sum

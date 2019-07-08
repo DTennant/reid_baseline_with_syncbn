@@ -111,6 +111,10 @@ _C.TEST.WEIGHT = ""
 _C.TEST.DEBUG = False
 _C.TEST.MULTI_GPU = False
 _C.TEST.CMC = [1,5,10]
+_C.TEST.VIS = False
+_C.TEST.VIS_Q_NUM = 10
+_C.TEST.VIS_G_NUM = 5
+_C.TEST.RERANK = True
 
 # ---------------------------------------------------------------------------- #
 # Misc options

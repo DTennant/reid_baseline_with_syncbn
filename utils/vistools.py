@@ -68,7 +68,7 @@ def read_im(im_path):
   # shape [H, W, 3]
   im = np.asarray(Image.open(im_path))
   # Resize to (im_h, im_w) = (256, 256)
-  resize_h_w = (256, 256)
+  resize_h_w = (384, 292)
   if (im.shape[0], im.shape[1]) != resize_h_w:
     im = cv2.resize(im, resize_h_w[::-1], interpolation=cv2.INTER_LINEAR)
   # shape [3, H, W]
@@ -84,7 +84,7 @@ def save_im(im, save_path):
 
 
 def rank_list_to_im(rank_list, same_id, q_im_path,
-                         g_im_paths, save_path,
+                         g_im_paths, 
                          n_row=-1, n_col=-1):
   """Save a query and its rank list as an image.
   Args:
@@ -93,15 +93,9 @@ def rank_list_to_im(rank_list, same_id, q_im_path,
       with same id as query
     q_im_path: query image path
     g_im_paths: ALL gallery image paths
-    save_path: path to save the query and its rank list as an image
   """
-  q_camid = int(q_im_path.split('/')[-1].split('_')[1][1:])
   ims = [read_im(q_im_path)]
-  ncam_ims = [read_im(q_im_path)]
-  false_ims = [read_im(q_im_path)]
   for idx, (ind, sid) in enumerate(zip(rank_list, same_id)):
-    g_camid = int(g_im_paths[ind].split('/')[-1].split('_')[1][1:])
-
     im = read_im(g_im_paths[ind])
     # Add green boundary to true positive, red to false positive
     color = np.array([0, 255, 0]) if sid else np.array([255, 0, 0])
