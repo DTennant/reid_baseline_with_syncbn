@@ -1,0 +1,68 @@
+2019-07-12 22:42:48,310 reid_baseline.eval INFO: Running with config:
+DATALOADER:
+  NUM_INSTANCE: 6
+  NUM_WORKERS: 8
+  SAMPLER: softmax_triplet
+DATASETS:
+  DATA_PATH: /home/zbc/data/veriwild
+  GALLERY_PATH: test
+  NAMES: veriwild
+  QUERY_PATH: query
+  TRAIN_PATH: train
+INPUT:
+  PADDING: 0
+  PIXEL_MEAN: [0.5, 0.5, 0.5]
+  PIXEL_STD: [0.5, 0.5, 0.5]
+  PROB: 0.5
+  RE_PROB: 0.5
+  SIZE_TEST: [384, 384]
+  SIZE_TRAIN: [384, 384]
+MODEL:
+  DEVICE: cuda
+  LABEL_SMOOTH: False
+  LAST_STRIDE: 1
+  NAME: resnet50
+  PRETRAIN_PATH: /home/zbc/.torch/models/resnet50-19c8e357.pth
+OUTPUT_DIR: /home/zbc/ReID/outputs/veriwild
+SOLVER:
+  BASE_LR: 0.0001
+  BIAS_LR_FACTOR: 1
+  CHECKPOINT_PERIOD: 5
+  CYTHON: True
+  EVAL_PERIOD: 5
+  FP16: True
+  GAMMA: 0.6
+  IMS_PER_BATCH: 36
+  LOG_PERIOD: 100
+  MARGIN: 0.3
+  MAX_EPOCHS: 260
+  MOMENTUM: 0.9
+  OPTIMIZER_NAME: Adam
+  STEPS: (20, 30, 45, 60, 75, 90, 105, 120, 135, 150, 165, 180, 195, 210, 225, 240, 255)
+  WARMUP_FACTOR: 0.01
+  WARMUP_ITERS: 10
+  WARMUP_METHOD: linear
+  WEIGHT_DECAY: 0.0005
+  WEIGHT_DECAY_BIAS: 0.0005
+TEST:
+  CMC: [1, 5, 10]
+  DEBUG: True
+  IMS_PER_BATCH: 16
+  MULTI_GPU: False
+  RERANK: True
+  VIS: False
+  VIS_G_NUM: 5
+  VIS_Q_NUM: 10
+  WEIGHT: outputs/veriwild/resnet50_epoch40.pth
+2019-07-12 22:47:57,250 reid_baseline.eval INFO: Validation Result:
+2019-07-12 22:47:57,250 reid_baseline.eval INFO: CMC Rank-1: 90.43%
+2019-07-12 22:47:57,250 reid_baseline.eval INFO: CMC Rank-5: 96.85%
+2019-07-12 22:47:57,250 reid_baseline.eval INFO: CMC Rank-10: 98.19%
+2019-07-12 22:47:57,250 reid_baseline.eval INFO: mAP: 74.27%
+2019-07-12 22:47:57,251 reid_baseline.eval INFO: --------------------
+2019-07-12 22:57:10,006 reid_baseline.eval INFO: ReRanking Result:
+2019-07-12 22:57:10,006 reid_baseline.eval INFO: CMC Rank-1: 89.66%
+2019-07-12 22:57:10,006 reid_baseline.eval INFO: CMC Rank-5: 95.45%
+2019-07-12 22:57:10,006 reid_baseline.eval INFO: CMC Rank-10: 97.46%
+2019-07-12 22:57:10,007 reid_baseline.eval INFO: mAP: 77.42%
+2019-07-12 22:57:10,007 reid_baseline.eval INFO: --------------------

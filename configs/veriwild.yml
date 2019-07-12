@@ -1,0 +1,53 @@
+MODEL:
+  PRETRAIN_PATH: '/home/zbc/.torch/models/resnet50-19c8e357.pth'
+  
+INPUT:
+  SIZE_TRAIN: [384, 384]
+  SIZE_TEST: [384, 384]
+  PIXEL_MEAN: [0.5, 0.5, 0.5]
+  PIXEL_STD: [0.5, 0.5, 0.5]
+  PROB: 0.5 # random horizontal flip
+  RE_PROB: 0.5 # random erasing 
+  PADDING: 0
+
+DATASETS:
+  NAMES: 'veriwild'
+  DATA_PATH: '/home/zbc/data/veriwild'
+  TRAIN_PATH: 'train'
+  QUERY_PATH: 'query'
+  GALLERY_PATH: 'test'
+
+DATALOADER:
+  SAMPLER: 'softmax_triplet'
+  NUM_INSTANCE: 6
+  NUM_WORKERS: 8
+
+SOLVER:
+  OPTIMIZER_NAME: 'Adam'
+  MAX_EPOCHS: 260
+  BASE_LR: 0.0001
+  BIAS_LR_FACTOR: 1
+  WEIGHT_DECAY: 0.0005
+  WEIGHT_DECAY_BIAS: 0.0005
+  IMS_PER_BATCH: 36
+  FP16: True
+
+  STEPS: [20, 30, 45, 60, 75, 90, 105, 120, 135, 150, 165, 180, 195, 210, 225, 240, 255]
+  GAMMA: 0.6
+
+  WARMUP_FACTOR: 0.01
+  WARMUP_ITERS: 10
+  WARMUP_METHOD: 'linear'
+
+  CHECKPOINT_PERIOD: 5
+  LOG_PERIOD: 100
+  EVAL_PERIOD: 5
+
+TEST:
+  IMS_PER_BATCH: 16
+  DEBUG: True
+  WEIGHT: "path"
+
+OUTPUT_DIR: "/home/zbc/ReID/outputs/veriwild"
+
+
