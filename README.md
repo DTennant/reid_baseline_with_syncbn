@@ -101,3 +101,37 @@ I only trained the model with 30 epoch, so the model may not be fully converged.
 2019-07-08 18:15:14,678 reid_baseline.eval INFO: mAP: 42.62%
 2019-07-08 18:15:14,679 reid_baseline.eval INFO: --------------------
 ```
+
+### Result on [VeRI-WILD](https://github.com/PKU-IMRE/VERI-Wild) small test set
+
+```bash
+2019-07-12 22:47:57,250 reid_baseline.eval INFO: Validation Result:
+2019-07-12 22:47:57,250 reid_baseline.eval INFO: CMC Rank-1: 90.43%
+2019-07-12 22:47:57,250 reid_baseline.eval INFO: CMC Rank-5: 96.85%
+2019-07-12 22:47:57,250 reid_baseline.eval INFO: CMC Rank-10: 98.19%
+2019-07-12 22:47:57,250 reid_baseline.eval INFO: mAP: 74.27%
+2019-07-12 22:47:57,251 reid_baseline.eval INFO: --------------------
+2019-07-12 22:57:10,006 reid_baseline.eval INFO: ReRanking Result:
+2019-07-12 22:57:10,006 reid_baseline.eval INFO: CMC Rank-1: 89.66%
+2019-07-12 22:57:10,006 reid_baseline.eval INFO: CMC Rank-5: 95.45%
+2019-07-12 22:57:10,006 reid_baseline.eval INFO: CMC Rank-10: 97.46%
+2019-07-12 22:57:10,007 reid_baseline.eval INFO: mAP: 77.42%
+2019-07-12 22:57:10,007 reid_baseline.eval INFO: --------------------
+```
+
+### Result on [VeRI776](https://github.com/VehicleReId/VeRidataset)
+
+```bash
+2019-07-13 11:35:12,402 reid_baseline.eval INFO: Validation Result:
+2019-07-13 11:35:12,402 reid_baseline.eval INFO: CMC Rank-1: 95.65%
+2019-07-13 11:35:12,402 reid_baseline.eval INFO: CMC Rank-5: 97.91%
+2019-07-13 11:35:12,403 reid_baseline.eval INFO: CMC Rank-10: 99.11%
+2019-07-13 11:35:12,403 reid_baseline.eval INFO: mAP: 77.15%
+2019-07-13 11:35:12,403 reid_baseline.eval INFO: --------------------
+2019-07-13 11:36:02,050 reid_baseline.eval INFO: ReRanking Result:
+2019-07-13 11:36:02,050 reid_baseline.eval INFO: CMC Rank-1: 97.20%
+2019-07-13 11:36:02,050 reid_baseline.eval INFO: CMC Rank-5: 97.85%
+2019-07-13 11:36:02,050 reid_baseline.eval INFO: CMC Rank-10: 98.75%
+2019-07-13 11:36:02,050 reid_baseline.eval INFO: mAP: 81.74%
+2019-07-13 11:36:02,050 reid_baseline.eval INFO: --------------------
+```
