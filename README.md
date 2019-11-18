@@ -2,7 +2,7 @@
 
 Original repo [here](https://github.com/michuanhaohao/reid-strong-baseline)
 
-However, the original repo uses [ignite](https://github.com/pytorch/ignite) for training and saving the model, which is incompatible with model using [SyncBN](https://github.com/vacancy/Synchronized-BatchNorm-PyTorch), So I reimplement the baseline without the use of ignite.
+However, the original repo uses [ignite](https://github.com/pytorch/ignite) for training and saving the model, which is incompatible with model using [SyncBN](https://github.com/vacancy/Synchronized-BatchNorm-PyTorch), So I reimplement the baseline without the use of ignite.(???)
 
 Most code in this repo is borrowed from the original one.
 
