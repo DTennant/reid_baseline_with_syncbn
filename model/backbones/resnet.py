@@ -90,11 +90,12 @@ class ResNet(nn.Module):
         return x
 
     def load_param(self, model_path):
-        param_dict = torch.load(model_path)
-        for i in param_dict:
-            if 'fc' in i:
-                continue
-            self.state_dict()[i].copy_(param_dict[i])
+        param = torch.load(model_path)
+        for i in param:
+            if 'fc' in i: continue
+            if i not in self.state_dict().keys(): continue
+            if param[i].shape != self.state_dict()[i].shape: continue
+            self.state_dict()[i].copy_(param[i])
 
     def random_init(self):
         for m in self.modules():
